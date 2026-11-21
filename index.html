@@ -54,7 +54,7 @@
     const targetMinutes=()=>BASE+state.breaks*EXTRA;
     const remainingMinutes=()=>Math.max(0,targetMinutes()-totalMs()/60000);
     function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-    function alarmTime(){const remain=remainingMinutes();if(state.status==='sleeping')return Date.now()+remain*60000;if(state.status==='awake'){const t=parse($('#eventTime').value);return Number.isFinite(t)?t+remain*60000:null}return null}
+    function alarmTime(){if(state.status==='sleeping'){const active=state.segments.at(-1),before=state.segments.slice(0,-1).reduce((sum,s)=>sum+(s.end-s.start),0)/60000;return active.start+Math.max(0,targetMinutes()-before)*60000}const remain=remainingMinutes();if(state.status==='awake'){const t=parse($('#eventTime').value);return Number.isFinite(t)?t+remain*60000:null}return null}
     function render(){save();const total=totalMs()/60000,remain=remainingMinutes(),goal=targetMinutes();$('#total').textContent=fmtDuration(total);$('#totalDetail').textContent=state.segments.length?`${state.segments.length} ${state.segments.length===1?'فترة نوم':'فترات نوم'}`:'لسه ما بدأناش';$('#goal').textContent=fmtDuration(goal);$('#breakCount').textContent=`${state.breaks} ${state.breaks===1?'انقطاع':'انقطاعات'}`;$('#remaining').textContent=fmtDuration(remain);
       const last=state.segments.at(-1),active=state.status==='sleeping'&&last&&last.end===null;
       if(state.status==='idle'||state.status==='complete'){$('#stepTitle').textContent=state.status==='complete'?'الحسبة اكتملت':'ابدأ أول فترة نوم';$('#eventLabel').textContent='وقت بداية النوم';$('#mainAction').textContent=state.status==='complete'?'ابدأ النوم من جديد':'بدأت أنام';$('#mainAction').dataset.action='start'}
