@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "نَوْم — متتبع النوم",
+  "short_name": "نَوْم",
+  "description": "سجّل نومك وتابع عادات راحتك بهدوء.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c1423",
+  "theme_color": "#101a2c",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
